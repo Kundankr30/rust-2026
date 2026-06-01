@@ -1,16 +1,16 @@
-fn main() {
-    // println!("Hello, world!");
+// fn main() {
+//     // println!("Hello, world!");
 
-    // first_rule();
-    // first_rule_break();
-    // second_rule();
-    // second_rule_breaks();
-    // third_rule();
-    third_rule_back();
-    ownership_with_integers();
-    // impl_string_copy();
-    // first_rule_break_test();
-}
+//     // first_rule();
+//     // first_rule_break();
+//     // second_rule();
+//     // second_rule_breaks();
+//     // third_rule();
+//     third_rule_back();
+//     ownership_with_integers();
+//     // impl_string_copy();
+//     // first_rule_break_test();
+// }
 
 
 // what is ownership?
@@ -182,3 +182,199 @@ fn ownership_with_integers(){
 //     // hello is owned by s2 so s2 will print hello
 //     // println!("{}", s2);
 // }
+
+
+// In real rust code , you don't want to give ownership always to a function just that
+// it can read or modify the values.
+
+// Let's say hrit has car, now debi wants to use hrit's car
+// hrit can give ownership of the car to debi 
+// in that case hrit will not agree
+// so to solve this hrit can simply lend hsi car to debi
+
+
+// This is called borrowing in rust
+// Rather than transfering the ownership of a value to a function we can simply
+// let the function lend or borrow that value and use it.
+// In this way the ownership is not transferred and function need is also satiisfied.
+
+
+// how we can borrow a value in programming
+// we can use a pointer that points to the memory location where the value is stored
+
+
+// & is the symbol for reference/borrow in rust
+
+// There are two types of references/borrows in rust
+// 1. immutable reference : &t
+// 2. mutable reference: &mut t
+
+// so if i am letting debi take my car with a mutable contract then debi can modify the car
+// but if i am letting debi take my car with an immutable contract then debi can only read the car but not modify it
+
+
+
+// Three rules of borrowing
+// 1: A reference must always point to a valid value
+
+// fn main(){
+//     // Declare a variable x and assign 5 to it
+//     // x is the owner of 5
+//     let x =5;
+//     let y = &x;
+
+//     println!("x: {}, y: {}", x, y);
+// }
+
+
+// fn main() {
+//     let r;
+//     {
+//         let x=5;
+//         r=&x; //r is pointing to memory location 0xhud8usg where x is stored
+//         println!("x: {}, r: {}", x, r);
+//     }// x is dropped here // now r is pointing to a memory location where x was stored
+//     // this is called dangling reference
+//     println!("r: {}", r);
+//     // use after free error, 
+// }
+
+
+// 2: Many shared references or one mutable reference, at a single time, can never be both
+
+// let's say hrit gives his car on borrow either with a mutable contract or immutable
+// now let's say hrit gives his car to debi, arindam, digdarshan but on immutable contract
+// so debi, arindam, digdarshan can ride the car but they can not modify it
+// if hrit wants give his car for modification, then hrit can give to arindam
+
+
+// one value can be shared with so many function to read it
+// or can be shared with only function to modify it
+// but never both at the same time
+
+// x=5
+// i can share &x with a , b , c , d ... number of varibales  as a immutable ref
+// a= &x
+// b= &x
+// c= &x
+// d= &x
+// but i can only share one mutable referenc of x
+// a = &mut x
+// b = &mut x - wrong
+
+
+// you can nnot do this also
+// a = &x
+//b = &mut x - wrong
+
+// lexical and non lexical
+
+
+
+// fn main() {
+//     // created a variable x and asisgn value 42
+//     let x =42;
+
+//     // we create multiple iimutable borrow of value x
+//     let r1 = &x; // immutable reference to x
+//     let r2 = &x; // another immutable reference to x
+//     let r3 = &x; // another immutable reference to x  
+
+//     println!("r1: {}, r2: {}, r3: {}", r1, r2, r3);
+
+// }
+
+// fn main() {
+//     let mut x = 42;
+
+//     let r1 = &mut x; // mutable reference to x
+//     let r2 = &mut x;
+
+//     // bank balance example
+
+//     // let mut balance = 1000;
+//     // let r1 = &mut balance; // mutable reference to balance
+//     // let r2 = &mut balance; // another mutable reference to balance
+
+//     println!("r1: {}", r1);
+//     println!("r2: {}", r2);
+// }
+
+
+// fn main() {
+//     let mut x =5;
+//     let r1 = &x; // immutable reference to x
+//     let r2 = &mut x;
+//     // println!("r1: {}, r2: {}", r1, r2);
+// }
+
+
+// non overlapping references are fine
+// fn main() {
+//     let mut x =5;
+
+//     // rust compiler is smart, it tracks the last use of each refrence
+//     // the last use of r1 is none so it considers that r1 is done
+
+//     let r1 = &x; // immutable reference to x
+//     let r2 = &x; // mutable reference to x
+
+//     println!("r1: {}, r2: {}", r1, r2); // compiler understand that r 1 and r2 are done here
+
+//     let r3 = &mut x; // mutable reference to x
+//     *r3 += 10;
+//     println!("r3: {}", r3);
+
+//     println!("x: {}", x);
+
+// }
+
+// rust compiler is mahavir
+// r1 is debi // take sthe car to drive // wed 
+// r2 is arindam // take the car to modify it // fri
+
+// fn main() {
+//     let mut x =5;
+//     let mut y = 10;
+
+//     // rust compiler is smart, it tracks the last use of each refrence
+//     // the last use of r1 is none so it considers that r1 is done
+
+//     let r1 = &x; // immutable reference to x
+//     let r2 = &x; // mutable reference to x
+
+//     println!("r1: {}, r2: {}", r1, r2); // compiler understand that r 1 and r2 are done here
+
+//     let mut r3 = &mut x; // mutable reference to x
+//     *r3 += 10;
+//     println!("r3: {}", r3);
+
+//     r3 = &mut y; // mutable reference to y
+//     *r3 += 20;
+//     println!("r3: {}", r3);
+
+//     println!("x: {}", x);
+//     println!("y: {}", y);
+// }
+
+
+// 3: refrences don't have ownership
+
+fn main() {
+    // a reference is a pointer to a value it does not own anything, it just points to the
+    // owner's data. When owner goes out of the scope, nothing is freed. 
+    // cause it didn't own anything.
+    // if owner's data gets dropped bcz of going of the scope or anything
+    // then reference will also be invalid.
+
+    let s = String::from("hello");
+    { 
+        let r = &s;
+        println!("r: {}", r);
+    }
+
+    println!("s: {}", s);
+}
+
+
+
