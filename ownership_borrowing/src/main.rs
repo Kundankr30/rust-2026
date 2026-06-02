@@ -360,21 +360,119 @@ fn ownership_with_integers(){
 
 // 3: refrences don't have ownership
 
+// fn main() {
+//     // a reference is a pointer to a value it does not own anything, it just points to the
+//     // owner's data. When owner goes out of the scope, nothing is freed. 
+//     // cause it didn't own anything.
+//     // if owner's data gets dropped bcz of going of the scope or anything
+//     // then reference will also be invalid.
+
+//     let s = String::from("hello");
+//     { 
+//         let r = &s;
+//         println!("r: {}", r);
+//     }
+
+//     println!("s: {}", s);
+// }
+
+
+
+// 2nd june 2026
+// doubt??
+
+
+// 1: when you have to lend something to someone then the object should exist
+// A reference must point to a valid value always
+// 2: Multiple immutable references are valid, only one mutable reference is allowed, both of them can 
+// never stay together
+// 3: references don't have ownership
+
+
+// borrowing through functions
+
+
+
+// immumtable reference passing through a function
+
+// fn main() {
+//     let s = String::from("hello");
+//     // here we are passing the reference of s to the function take_immutable_reference
+//     take_immutable_reference(&s);
+//     println!("value of s is {}", s);
+
+
+
+//     let mut s2 = String::from("hello");
+//     // we will pass s2 to a mutable function
+//     take_mutable_reference(&mut s2);
+//     println!("value of s2 is {}", s2);
+// }
+
+// fn take_immutable_reference(x: &String){
+//     println!("taking immutable reference of {}", x);
+//     println!("value of x is {}", x);
+// }
+
+// fn take_mutable_reference(x: &mut String){
+//     println!("taking immutable reference of {}", x);
+
+//     // we can modify value of x
+//     x.push_str(" world");
+//     println!("value of x is {}", x);
+// }
+
+
+
 fn main() {
-    // a reference is a pointer to a value it does not own anything, it just points to the
-    // owner's data. When owner goes out of the scope, nothing is freed. 
-    // cause it didn't own anything.
-    // if owner's data gets dropped bcz of going of the scope or anything
-    // then reference will also be invalid.
+    // so hrit has a car
+    // hrit can give his car to others to use if they need
+    // now govt says only the owner can driver the car 
+    // or they have to make a rental contract with the person they want their car to drive
 
-    let s = String::from("hello");
-    { 
-        let r = &s;
-        println!("r: {}", r);
-    }
+    let mut h_car = String::from("hrit's car");
+    let h_car2 = h_car.clone();
 
-    println!("s: {}", s);
+    // so debi wants to use  hrit's car
+    // but hrit is going out of city and don;t have time for contract
+    // so hrit says take my car totally i will give you the ownership
+    // debi_use_hrit_car(h_car);
+
+
+
+    // debi wants to use hrit's car
+    // but hrit also has need for his own car 
+    // hrit will just buy a similar new car and give it to debi
+    debi_use_hrit_car(h_car);
+
+
+    // debi wants to use hrit's car
+    // but hrit can not buy new and he has need of own car also 
+    // as per govt rule hrit can lend car to debi
+
+    // one is debi can just drive the car
+    // another is debi is allowed to modify the car along with driving it
+
+    // first case - immutable borrow -- a immutable contract
+    debi_use_hrit_car_immut(&h_car);
+
+
+    // second case - mutable broow - debi can modify the car
+    // debi_use_hrit_car_mut(&mut h_car);
+
 }
+
+
+// debi wants to use hrit's car
+fn debi_use_hrit_car(car: String){
+    println!("debi is using {}", car);
+}
+
+
+fn debi_use_hrit_car_immut(car: &String){
+    println!("debi is using {}", car);
+}
+
 
 
 
