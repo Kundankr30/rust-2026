@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 fn main() {
     //arr_repeated();
     //access_arr();
@@ -10,7 +12,11 @@ fn main() {
     //iter_vec();
     //string_test()
     //string_concat()
-    slic_arr()
+    //slic_arr()
+    //init_tuple()
+    //access_tuple()
+    match_tuple()
+   // init_map()
 }
 
 // array
@@ -189,4 +195,110 @@ fn slic_arr() {
         Some(s) => println!("{:?}", s),
         None => println!("You are actually out of bound !!"),
     }
+}
+
+// Tuples !!
+
+fn init_tuple() {
+    let tup = (1,2,3,4,5);
+
+    println!("{:?}",tup);
+
+    let tup1 = (1,2,'c',true,1.68);
+
+    println!("{:?}",tup1);
+
+    let tup2 = ();
+    println!("{:?}",tup2);
+
+    let tup3 = (1,[2,5,6],([5,6,7],true,'c',5.7));
+
+    println!("{:?}", tup3);
+}
+
+fn access_tuple() {
+    let tup = (1,2,5,7,8);
+
+    println!("{}",tup.1);
+
+
+    let (a,b,c,d,e) = tup;
+
+    println!("{}, {}, {}", a,b,c);
+
+    let tup1 =  (5,6,7,8,9);
+    
+    let (..,f) = tup1; // a,..,b - a,.. - ..,c
+
+    println!("{}",f);
+    println!("{:?}",tup1);
+
+    // multiple return without struct 
+    fn return_mul() -> (i32,bool) {
+        return (5,true)
+    }
+}
+
+fn match_tuple() {
+    //let p = (0,0);
+  
+    /* match p {
+        (0,0) => println!("origin is here"),
+        (1,2) => println!("somethin"),
+        (0,y) => println!("here is y-> {}",y),
+        (x,0) => println!("here is x-> {}",x),
+        (x,y) => println!("both of them {} and {}",x,y),
+}
+     */
+
+    
+
+    //println!("(i32,bool,f64) -> {} bytes", std::mem::size_of::<(i32,bool,f64)>()); // 4,1,8 = 13
+
+    // byte - 0 1 2 3 4 5 6 7 8 9 10 11
+    //        [ i32 ][b][...][ f64 ]
+
+    let tup = (1,2,3,4,5,6,7,8,9,10,11,12,13);
+    let (..,a) = tup;
+    println!("{}",a);
+    //println!("{:?}",tup);
+}
+
+// Hash Maps !!!
+
+fn init_map() {
+    let mut new_map: HashMap<i32,String> = HashMap::new();
+
+    new_map.insert(1,"biswa".to_string());
+    new_map.insert(2,"satyam".to_string());
+    new_map.insert(4,"rakesh".to_string());
+
+    
+
+    new_map.insert(2,"kundan".to_string());
+    println!("{:?}",new_map);
+
+    let a = new_map.get(&2);
+    println!("{:?}",a);
+
+    let key_one = 7;
+    let key_two = 2;
+
+    println!("contains {} -> {}",key_one,new_map.contains_key(&key_one));
+    
+    println!("contains {} -> {}",key_two,new_map.contains_key(&key_two));
+
+    let rem = new_map.remove(&4);
+
+    println!("{:?}",new_map);
+    println!("removed -> {:?}",rem);
+
+    for key in new_map.keys() {
+        println!("keys -> {}",key);
+    }
+
+     for (key,value) in &new_map {
+         println!("keys -> {}, value -> {}",key,value);
+     }
+
 }
