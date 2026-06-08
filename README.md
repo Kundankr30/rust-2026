@@ -24,6 +24,8 @@ cargo --version
 |---|--------|----------------|
 | 00 | [`00-cargo-and-rustc`](./00-cargo-and-rustc) | Compiling directly with `rustc` vs. managing a project with Cargo; crates and `Cargo.toml` |
 | 01 | [`01-variables-and-data-types`](./01-variables-and-data-types) | `let`/`mut`, constants, scalar types (integers, floats, bool, char), and `as` type casting |
+| 02 | [`02-functions-and-control-flow`](./02-functions-and-control-flow) | Defining functions and return values; `if`/`else` as statements and expressions; `match`; `loop`/`while`/`for` |
+| 03 | [`ownership_borrowing`](./ownership_borrowing) | The three ownership rules, moves vs. the `Copy` trait, transferring ownership in/out of functions, and `clone` |
 
 ### 00: Cargo and rustc
 
@@ -35,6 +37,22 @@ cargo --version
 - `vars/`: Cargo project exploring immutability and `mut`, the `const PI`,
   integer/float/bool/char types, byte representation of characters, and numeric
   casting with `as` (including overflow wrap-around and float precision).
+
+### 02: Functions and control flow
+
+- Cargo project covering custom functions with typed parameters and return
+  values (and early `return`), `if`/`else` chains and `if` as an expression,
+  `match` (catch-all `_`, or-patterns, ranges, block arms), and the three loop
+  forms (`loop`, `while`, `for`) with `break`, `continue`, `step_by`, `rev`,
+  and `enumerate`. Many variants are kept commented out as a learning trail.
+
+### 03: Ownership and borrowing
+
+- `ownership_borrowing/`: Cargo project working through Rust's three ownership
+  rules (single owner, drop on scope exit, ownership transfer), how moves
+  invalidate the source variable, returning ownership back from a function, the
+  `Copy` trait for stack types like integers, and `clone` for duplicating heap
+  data such as `String`.
 
 ## Running the code
 
@@ -59,6 +77,8 @@ rust-2026/
 ├── 00-cargo-and-rustc/
 │   ├── main.rs              # compiled with rustc directly
 │   └── silicon/             # cargo project
-└── 01-variables-and-data-types/
-    └── vars/                # cargo project
+├── 01-variables-and-data-types/
+│   └── vars/                # cargo project
+├── 02-functions-and-control-flow/   # cargo project
+└── ownership_borrowing/             # cargo project
 ```
